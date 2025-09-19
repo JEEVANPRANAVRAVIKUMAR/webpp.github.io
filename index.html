@@ -6,28 +6,50 @@
   <title>My Timetable</title>
   <style>
     body {
+      margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
       color: #fff;
+      display: flex;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: rgba(0,0,0,0.7);
+      padding: 20px;
       text-align: center;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+    .sidebar h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .time {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      animation: fadeIn 1s infinite alternate;
+    }
+    /* Main content */
+    .content {
+      margin-left: 270px;
       padding: 30px;
+      flex-grow: 1;
     }
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      animation: fadeIn 2s;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
     }
     select, button {
       padding: 10px 20px;
-      font-size: 1rem;
-      margin: 10px;
+      margin: 8px;
       border-radius: 8px;
       border: none;
+      font-size: 1rem;
       cursor: pointer;
       transition: 0.3s;
-    }
-    select {
-      color: #333;
     }
     button {
       background: #ff6b6b;
@@ -40,13 +62,12 @@
     ul {
       list-style: none;
       padding: 0;
-      margin-top: 20px;
     }
     li {
       background: rgba(255,255,255,0.1);
       margin: 8px auto;
       padding: 12px;
-      width: 60%;
+      width: 70%;
       border-radius: 10px;
       font-size: 1.1rem;
       animation: slideIn 0.5s ease forwards;
@@ -75,84 +96,101 @@
       padding: 8px;
       border-radius: 6px;
     }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
     @keyframes slideIn {
-      from {transform: translateY(30px); opacity: 0;}
+      from {transform: translateY(20px); opacity: 0;}
       to {transform: translateY(0); opacity: 1;}
+    }
+    @keyframes fadeIn {
+      from {opacity: 0.7;}
+      to {opacity: 1;}
     }
   </style>
 </head>
 <body>
-  <h1>📅 My Weekly Timetable</h1>
-  
-  <label for="day">Choose a day:</label>
-  <select id="day">
-    <option value="Monday">Monday</option>
-    <option value="Tuesday">Tuesday</option>
-    <option value="Wednesday">Wednesday</option>
-    <option value="Thursday">Thursday</option>
-    <option value="Friday">Friday</option>
-  </select>
-  
-  <button onclick="showTimetable()">Show Timetable</button>
-  <button onclick="toggleCalendar()">➕ Add Reminder</button>
-  
-  <h2 id="dayTitle"></h2>
-  <ul id="schedule"></ul>
-  
-  <!-- Calendar Popup -->
-  <div id="calendar">
-    <h3>Add Reminder</h3>
-    <label>Date: </label><br>
-    <input type="date" id="reminderDate"><br>
-    <label>Note: </label><br>
-    <textarea id="reminderNote"></textarea><br>
-    <button onclick="saveReminder()">Save</button>
-    <div id="reminderList"></div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>📅 Today</h2>
+    <div id="date"></div>
+    <div class="time" id="time"></div>
   </div>
-  
+
+  <!-- Main content -->
+  <div class="content">
+    <h1>My Weekly Timetable</h1>
+
+    <label for="day">Choose a day:</label>
+    <select id="day">
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+    </select>
+    
+    <button onclick="showTimetable()">Show Timetable</button>
+    <button onclick="toggleCalendar()">➕ Add Reminder</button>
+    
+    <h2 id="dayTitle"></h2>
+    <ul id="schedule"></ul>
+    
+    <!-- Calendar -->
+    <div id="calendar">
+      <h3>Add Reminder</h3>
+      <label>Date: </label><br>
+      <input type="date" id="reminderDate"><br>
+      <label>Note: </label><br>
+      <textarea id="reminderNote"></textarea><br>
+      <button onclick="saveReminder()">Save</button>
+      <div id="reminderList"></div>
+    </div>
+  </div>
+
   <script>
+    /* Timetable Data */
     const timetable = {
       Monday: [
-        "2:00 PM - Maths",
-        "2:50 PM - Softskills",
-        "3:40 PM - CAO",
-        "4:40 PM - JAVA",
-        "5:30 PM - MPMC"
+        "8:00 - 9:40 AM ->DSA LAB (venue:AB3 310)",
+        "2:00 – 2:50 PM → Maths (venue:AB3 203)",
+        "2:50 – 3:40 PM → Softskills (venue:AB3 205)",
+        "3:50 – 4:40 PM → CAO (venue:AB3 106)",
+        "4:40 – 5:30 PM → JAVA (venue:AB3 110)",
+        "5:40 – 6:30 PM → MPMC (venue:AB3 110)"
       ],
       Tuesday: [
-        "2:00 PM - ----",
-        "2:50 PM - MPMC",
-        "3:40 PM - OS",
-        "4:40 PM - DSA",
-        "5:30 PM - Maths"
+        "8:00 - 9.40 AM -> JAVA LAB (venue : AB3 410)",
+        "9:50 - 11:30 AM-> OS LAB (venue :AB1 613)",
+        "2:00 – 2:50 PM → ----",
+        "2:50 – 3:40 PM → MPMC (venue:AB3 110)",
+        "3:50 – 4:40 PM → OS (venue :AB3 107)",
+        "4:40 – 5:30 PM → DSA (venue:AB3 204)",
+        "5:40 – 6:30 PM → Maths (venue:AB3 203)"
       ],
       Wednesday: [
-        "2:00 PM - DSA",
-        "2:50 PM - Maths",
-        "3:40 PM - Softskills",
-        "4:40 PM - CAO",
-        "5:30 PM - ----"
+        "8:00 - 9:40 PM -> MPMC LAB (venue: AB1 207)",
+        "2:00 – 2:50 PM → DSA (venue:AB3 204)",
+        "2:50 – 3:40 PM → Maths (venue:AB3 203)",
+        "3:50 – 4:40 PM → Softskills (venue:AB3 205)",
+        "4:40 – 5:30 PM → CAO (venue:AB3 106)",
+        "5:40 – 6:30 PM → ----"
       ],
       Thursday: [
-        "2:00 PM - CAO",
-        "2:50 PM - ----",
-        "3:40 PM - MPMC",
-        "4:40 PM - OS",
-        "5:30 PM - ----"
+        "2:00 – 2:50 PM → CAO (venue:AB3 106)",
+        "2:50 – 3:40 PM → ----",
+        "3:50 – 4:40 PM → MPMC",
+        "4:40 – 5:30 PM → OS (venue:AB3 107)",
+        "5:40 – 6:30 PM → ----"
       ],
       Friday: [
-        "2:00 PM - OS",
-        "2:50 PM - DSA",
-        "3:40 PM - Maths",
-        "4:40 PM - Softskills",
-        "5:30 PM - ----"
+        "8:00 - 9.40 AM -> JAVA LAB (venue : AB3 410)",
+        "2:00 – 2:50 PM → OS (venue:AB3 107)",
+        "2:50 – 3:40 PM → DSA (venue:AB3 204)",
+        "3:50 – 4:40 PM → Maths (venue:AB3 203)",
+        "4:40 – 5:30 PM → Softskills (venue:AB3 205)",
+        "5:40 – 6:30 PM → ----"
       ]
     };
 
+    /* Show timetable */
     function showTimetable() {
       const day = document.getElementById("day").value;
       const schedule = document.getElementById("schedule");
@@ -168,24 +206,46 @@
       });
     }
 
+    /* Sidebar Date & Time */
+    function updateDateTime() {
+      const now = new Date();
+      document.getElementById("date").textContent = now.toDateString();
+      document.getElementById("time").textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    /* Calendar */
     function toggleCalendar() {
       const cal = document.getElementById("calendar");
       cal.style.display = (cal.style.display === "block") ? "none" : "block";
+      loadReminders();
     }
 
     function saveReminder() {
       const date = document.getElementById("reminderDate").value;
       const note = document.getElementById("reminderNote").value;
       if (date && note) {
-        const reminderList = document.getElementById("reminderList");
-        const div = document.createElement("div");
-        div.className = "note";
-        div.textContent = date + " - " + note;
-        reminderList.appendChild(div);
+        let reminders = JSON.parse(localStorage.getItem("reminders")) || [];
+        reminders.push({ date, note });
+        localStorage.setItem("reminders", JSON.stringify(reminders));
         document.getElementById("reminderNote").value = "";
+        loadReminders();
       } else {
         alert("Please enter date and note!");
       }
+    }
+
+    function loadReminders() {
+      const reminderList = document.getElementById("reminderList");
+      reminderList.innerHTML = "";
+      let reminders = JSON.parse(localStorage.getItem("reminders")) || [];
+      reminders.forEach(r => {
+        let div = document.createElement("div");
+        div.className = "note";
+        div.textContent = r.date + " → " + r.note;
+        reminderList.appendChild(div);
+      });
     }
   </script>
 </body>
