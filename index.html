@@ -1,17 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My GitHub Webpage</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Timetable</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      animation: fadeIn 2s;
+    }
+    select, button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    select {
+      color: #333;
+    }
+    button {
+      background: #ff6b6b;
+      color: #fff;
+    }
+    button:hover {
+      background: #ff4757;
+      transform: scale(1.05);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      background: rgba(255,255,255,0.1);
+      margin: 8px auto;
+      padding: 12px;
+      width: 60%;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      animation: slideIn 0.5s ease forwards;
+    }
+    /* Calendar popup */
+    #calendar {
+      display: none;
+      background: #fff;
+      color: #333;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      margin: 20px auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    input, textarea {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+    }
+    .note {
+      margin-top: 10px;
+      background: #eee;
+      padding: 8px;
+      border-radius: 6px;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes slideIn {
+      from {transform: translateY(30px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+  </style>
 </head>
 <body>
-  <header><h1>Welcome to my site</h1></header>
-  <main>
-    <p>Hello — this is my GitHub Pages website.</p>
-    <p><a href="about.html">About</a></p>
-  </main>
-  <footer>&copy; 2025 Your Name</footer>
+  <h1>📅 My Weekly Timetable</h1>
+  
+  <label for="day">Choose a day:</label>
+  <select id="day">
+    <option value="Monday">Monday</option>
+    <option value="Tuesday">Tuesday</option>
+    <option value="Wednesday">Wednesday</option>
+    <option value="Thursday">Thursday</option>
+    <option value="Friday">Friday</option>
+  </select>
+  
+  <button onclick="showTimetable()">Show Timetable</button>
+  <button onclick="toggleCalendar()">➕ Add Reminder</button>
+  
+  <h2 id="dayTitle"></h2>
+  <ul id="schedule"></ul>
+  
+  <!-- Calendar Popup -->
+  <div id="calendar">
+    <h3>Add Reminder</h3>
+    <label>Date: </label><br>
+    <input type="date" id="reminderDate"><br>
+    <label>Note: </label><br>
+    <textarea id="reminderNote"></textarea><br>
+    <button onclick="saveReminder()">Save</button>
+    <div id="reminderList"></div>
+  </div>
+  
+  <script>
+    const timetable = {
+      Monday: [
+        "2:00 PM - Maths",
+        "2:50 PM - Softskills",
+        "3:40 PM - CAO",
+        "4:40 PM - JAVA",
+        "5:30 PM - MPMC"
+      ],
+      Tuesday: [
+        "2:00 PM - ----",
+        "2:50 PM - MPMC",
+        "3:40 PM - OS",
+        "4:40 PM - DSA",
+        "5:30 PM - Maths"
+      ],
+      Wednesday: [
+        "2:00 PM - DSA",
+        "2:50 PM - Maths",
+        "3:40 PM - Softskills",
+        "4:40 PM - CAO",
+        "5:30 PM - ----"
+      ],
+      Thursday: [
+        "2:00 PM - CAO",
+        "2:50 PM - ----",
+        "3:40 PM - MPMC",
+        "4:40 PM - OS",
+        "5:30 PM - ----"
+      ],
+      Friday: [
+        "2:00 PM - OS",
+        "2:50 PM - DSA",
+        "3:40 PM - Maths",
+        "4:40 PM - Softskills",
+        "5:30 PM - ----"
+      ]
+    };
+
+    function showTimetable() {
+      const day = document.getElementById("day").value;
+      const schedule = document.getElementById("schedule");
+      const dayTitle = document.getElementById("dayTitle");
+      
+      schedule.innerHTML = "";
+      dayTitle.textContent = day + " Timetable";
+      
+      timetable[day].forEach(item => {
+        let li = document.createElement("li");
+        li.textContent = item;
+        schedule.appendChild(li);
+      });
+    }
+
+    function toggleCalendar() {
+      const cal = document.getElementById("calendar");
+      cal.style.display = (cal.style.display === "block") ? "none" : "block";
+    }
+
+    function saveReminder() {
+      const date = document.getElementById("reminderDate").value;
+      const note = document.getElementById("reminderNote").value;
+      if (date && note) {
+        const reminderList = document.getElementById("reminderList");
+        const div = document.createElement("div");
+        div.className = "note";
+        div.textContent = date + " - " + note;
+        reminderList.appendChild(div);
+        document.getElementById("reminderNote").value = "";
+      } else {
+        alert("Please enter date and note!");
+      }
+    }
+  </script>
 </body>
 </html>
