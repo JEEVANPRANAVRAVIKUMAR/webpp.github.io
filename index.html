@@ -71,6 +71,13 @@
       border-radius: 10px;
       font-size: 1.1rem;
       animation: slideIn 0.5s ease forwards;
+      transition: 0.3s ease;
+    }
+    /* Hover animation for timetable items */
+    li:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     /* Calendar popup */
     #calendar {
@@ -149,43 +156,43 @@
     /* Timetable Data */
     const timetable = {
       Monday: [
-        "8:00 - 9:40 AM ->DSA LAB (venue:AB3 310)",
-        "2:00 – 2:50 PM → Maths (venue:AB3 203)",
-        "2:50 – 3:40 PM → Softskills (venue:AB3 205)",
-        "3:50 – 4:40 PM → CAO (venue:AB3 106)",
-        "4:40 – 5:30 PM → JAVA (venue:AB3 110)",
-        "5:40 – 6:30 PM → MPMC (venue:AB3 110)"
+        "8:00 - 9:40 AM -> DSA LAB (venue: AB3 310)",
+        "2:00 – 2:50 PM → Maths (venue: AB3 203)",
+        "2:50 – 3:40 PM → Softskills (venue: AB3 205)",
+        "3:50 – 4:40 PM → CAO (venue: AB3 106)",
+        "4:40 – 5:30 PM → JAVA (venue: AB3 110)",
+        "5:40 – 6:30 PM → MPMC (venue: AB3 110)"
       ],
       Tuesday: [
-        "8:00 - 9.40 AM -> JAVA LAB (venue : AB3 410)",
-        "9:50 - 11:30 AM-> OS LAB (venue :AB1 613)",
+        "8:00 - 9:40 AM -> JAVA LAB (venue : AB3 410)",
+        "9:50 - 11:30 AM -> OS LAB (venue : AB1 613)",
         "2:00 – 2:50 PM → ----",
-        "2:50 – 3:40 PM → MPMC (venue:AB3 110)",
-        "3:50 – 4:40 PM → OS (venue :AB3 107)",
-        "4:40 – 5:30 PM → DSA (venue:AB3 204)",
-        "5:40 – 6:30 PM → Maths (venue:AB3 203)"
+        "2:50 – 3:40 PM → MPMC (venue: AB3 110)",
+        "3:50 – 4:40 PM → OS (venue : AB3 107)",
+        "4:40 – 5:30 PM → DSA (venue: AB3 204)",
+        "5:40 – 6:30 PM → Maths (venue: AB3 203)"
       ],
       Wednesday: [
-        "8:00 - 9:40 PM -> MPMC LAB (venue: AB1 207)",
-        "2:00 – 2:50 PM → DSA (venue:AB3 204)",
-        "2:50 – 3:40 PM → Maths (venue:AB3 203)",
-        "3:50 – 4:40 PM → Softskills (venue:AB3 205)",
-        "4:40 – 5:30 PM → CAO (venue:AB3 106)",
+        "8:00 - 9:40 AM -> MPMC LAB (venue: AB1 207)",
+        "2:00 – 2:50 PM → DSA (venue: AB3 204)",
+        "2:50 – 3:40 PM → Maths (venue: AB3 203)",
+        "3:50 – 4:40 PM → Softskills (venue: AB3 205)",
+        "4:40 – 5:30 PM → CAO (venue: AB3 106)",
         "5:40 – 6:30 PM → ----"
       ],
       Thursday: [
-        "2:00 – 2:50 PM → CAO (venue:AB3 106)",
+        "2:00 – 2:50 PM → CAO (venue: AB3 106)",
         "2:50 – 3:40 PM → ----",
         "3:50 – 4:40 PM → MPMC",
-        "4:40 – 5:30 PM → OS (venue:AB3 107)",
+        "4:40 – 5:30 PM → OS (venue: AB3 107)",
         "5:40 – 6:30 PM → ----"
       ],
       Friday: [
-        "8:00 - 9.40 AM -> JAVA LAB (venue : AB3 410)",
-        "2:00 – 2:50 PM → OS (venue:AB3 107)",
-        "2:50 – 3:40 PM → DSA (venue:AB3 204)",
-        "3:50 – 4:40 PM → Maths (venue:AB3 203)",
-        "4:40 – 5:30 PM → Softskills (venue:AB3 205)",
+        "8:00 - 9:40 AM -> JAVA LAB (venue : AB3 410)",
+        "2:00 – 2:50 PM → OS (venue: AB3 107)",
+        "2:50 – 3:40 PM → DSA (venue: AB3 204)",
+        "3:50 – 4:40 PM → Maths (venue: AB3 203)",
+        "4:40 – 5:30 PM → Softskills (venue: AB3 205)",
         "5:40 – 6:30 PM → ----"
       ]
     };
